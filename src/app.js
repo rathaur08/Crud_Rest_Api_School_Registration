@@ -47,6 +47,22 @@ app.get("/students/:id", async (req, res) => {
     }
 })
 
+// Update the data Student using id --------------->
+app.patch("/students/:id", async (req, res) => {
+    try {
+        const _id = req.params.id;
+        const UpdateUser = await Student.findByIdAndUpdate(_id, req.body,{new : true});
+        console.log(UpdateUser);
+        if (!UpdateUser) {
+            return res.status(404).send();
+        } else {
+            res.send(UpdateUser);
+        }
+    } catch (err) {
+        res.send(err);
+    }
+})
+
 // Delete the  Students by it id --------------->
 app.delete("/students/:id", async (req, res) => {
     try {
