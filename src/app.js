@@ -6,9 +6,10 @@ const app = express();
 const port = process.env.PORT || 8000;
 app.use(express.json());
 
-// app.get("/", (req, res) => {
-//     res.send("Hello From the Student Registration..");
-// });
+app.get("/", (req, res) => {
+    res.send("Hello From the Student Registration..");
+});
+
 // Create a new Students --------------->
 app.post("/students", async (req, res) => {
     try {
@@ -17,6 +18,32 @@ app.post("/students", async (req, res) => {
         res.status(201).send(CreateUser);
     } catch (err) {
         res.status(400).send(err);
+    }
+})
+
+// Read the data of Student --------------->
+app.get("/students", async (req, res) => {
+    try {
+        const ReadUser = await Student.find();
+        res.send(ReadUser);
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+// get the indivisual Students data using id --------------->
+app.get("/students/:id", async (req, res) => {
+    try {
+        const _id = req.params.id;
+        const ReadUserId = await Student.findById(_id);
+        console.log(ReadUserId);
+        if (!ReadUserId) {
+            return res.status(404).send();
+        } else {
+            res.send(ReadUserId);
+        }
+    } catch (err) {
+        res.send(err);
     }
 })
 
