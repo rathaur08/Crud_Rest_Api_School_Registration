@@ -47,6 +47,22 @@ app.get("/students/:id", async (req, res) => {
     }
 })
 
+// Delete the  Students by it id --------------->
+app.delete("/students/:id", async (req, res) => {
+    try {
+        const DeleteUser = await Student.findByIdAndDelete(req.params.id);
+        // console.log(DeleteUser);
+        if (!req.params.id) {
+            return res.status(404).send();
+        } else {
+            res.send(DeleteUser);
+        }
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
+
 // Create HTTP Server Using Express
 app.listen(port, () => {
     console.log("listing the port at 8000");
